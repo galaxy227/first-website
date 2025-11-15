@@ -18,24 +18,15 @@ body {
 	height: 95%;
 }
 
-img {
-	display: block;
-	margin: 0 auto;
-	width: 200px;
-	filter: blur(3px);
+h1 {
+	background-color: #66FF99;
 }
 
-li {
-	color: orange;
-	padding: 0 20px 20px 20px;
-}
-
-p {
-	color: white;
-	border-top: 1px solid white;
-	padding: 0 20px 20px 20px;
-}
-
-.highlight {
-	background-color: orange;
+.button {
+	padding: 1px 6px;
+	border: 1px outset buttonborder;
+	border-radius: 3px;
+	color: buttontext;
+	background-color: buttonface;
+	text-decoration: none;
 }
