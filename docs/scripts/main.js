@@ -3,7 +3,6 @@
 const myHeading = document.querySelector("h1");
 // Update the text content of the <h1>
 myHeading.textContent = "Hello world!";
-*/
 
 const myImage = document.querySelector("img");
 myImage.addEventListener("click", () => {
@@ -36,3 +35,4 @@ if (!localStorage.getItem(savedName)) {
 myButton.addEventListener("click", () => {
 	setUserName();
 });
+*/

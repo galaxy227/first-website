@@ -1,12 +1,13 @@
 html {
 	/* Appearance */
 	background-color: #112233;
+	border: 4px solid red;
 	/* Dimension */
-	width: 100vw;
-	height: 100vh;
+	margin: 0;
+	padding: 0;
+	/* Content */
 	display: flex;
 	justify-content: center;
-	align-items: center;
 }
 
 body {
@@ -14,28 +15,19 @@ body {
 	background-color: #07111B;
 	border: 2px solid orange;
 	/* Dimension */
-	width: 95%;
-	height: 95%;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-img {
-	display: block;
-	margin: 0 auto;
-	width: 200px;
-	filter: blur(3px);
-}
-
-li {
-	color: orange;
-	padding: 0 20px 20px 20px;
-}
-
-p {
-	color: white;
-	border-top: 1px solid white;
-	padding: 0 20px 20px 20px;
-}
-
-.highlight {
-	background-color: orange;
+header {
+	/* Appearance */
+	background-color: #AAAAAA;
+	border: 1px solid yellow;
+	/* Position */
+	position: sticky;
+	top: 0;
+	z-index: 1;
 }
