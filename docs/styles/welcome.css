@@ -1,0 +1,15 @@
+.div-acronym {
+	/* Content */
+	display: flex;
+	flex-direction: column;
+}
+
+.p-acronym {
+	/* Dimension */
+	margin-top: 0.5%;
+	margin-bottom: 0.5%;
+}
+.p-acronym::first-letter {
+	/* Appearance */
+	font-size: var(--huge-text);
+}
