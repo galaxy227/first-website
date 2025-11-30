@@ -29,11 +29,16 @@ async function fetchFileContent(filePath) {
 	}
 }
 
+// TODO module
+let welcomeHTML;
+let gettingStartedHTML;
+let documentationHTML;
+let blogHTML;
 (async () => {
-	const welcomeHTML = await fetchFileContent("html/welcome.html");
-	const gettingStartedHTML = await fetchFileContent("html/getting-started.html");
-	const documentationHTML = await fetchFileContent("html/documizer.html");
-	const blogHTML = await fetchFileContent("html/blog.html");
+	welcomeHTML = await fetchFileContent("html/welcome.html");
+	gettingStartedHTML = await fetchFileContent("html/getting-started.html");
+	documentationHTML = await fetchFileContent("html/documizer.html");
+	blogHTML = await fetchFileContent("html/blog.html");
 })();
 
 /* 
@@ -43,23 +48,26 @@ async function fetchFileContent(filePath) {
 */
 
 function setArticle(article) {
-	if (article === ARTICLE_TYPE.WELCOME) {
-		article_element.innerHTML = welcomeHTML;
-		activeArticle = ARTICLE_TYPE.WELCOME;
+	try {
+		if (article === ARTICLE_TYPE.WELCOME) {
+			article_element.innerHTML = welcomeHTML;
+			activeArticle = ARTICLE_TYPE.WELCOME;
+		}
+		else if (article === ARTICLE_TYPE.GETTING_STARTED) {
+			article_element.innerHTML = gettingStartedHTML;
+			activeArticle = ARTICLE_TYPE.GETTING_STARTED;
+		}
+		else if (article === ARTICLE_TYPE.DOCUMENTATION) {
+			article_element.innerHTML = documentationHTML;
+			activeArticle = ARTICLE_TYPE.DOCUMENTATION;
+		}
+		else if (article === ARTICLE_TYPE.BLOG) {
+			article_element.innerHTML = blogHTML;
+			activeArticle = ARTICLE_TYPE.BLOG;
+		}
+	} catch (error) {
+		console.error("Error setting article content! Error: ", error);
 	}
-	else if (article === ARTICLE_TYPE.GETTING_STARTED) {
-		article_element.innerHTML = gettingStartedHTML;
-		activeArticle = ARTICLE_TYPE.GETTING_STARTED;
-	}
-	else if (article === ARTICLE_TYPE.GETTING_STARTED) {
-		article_element.innerHTML = documentationHTML;
-		activeArticle = ARTICLE_TYPE.DOCUMENTATION;
-	}
-	else if (article === ARTICLE_TYPE.GETTING_STARTED) {
-		article_element.innerHTML = blogHTML;
-		activeArticle = ARTICLE_TYPE.BLOG;
-	}
-	else console.log("Error setting article content!");
 }
 
 /* 
