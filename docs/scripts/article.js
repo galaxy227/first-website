@@ -1,21 +1,37 @@
 import * as UTILITY from "./utility.js"
 
+const ARTICLE_TYPE = Object.freeze({
+	WELCOME: "WELCOME",
+	GETTING_STARTED: "GETTING_STARTED",
+	DOCUMENTATION: "DOCUMENTATION",
+	BLOG: "BLOG",
+});
+
 /* 
  * ######################
  * LOAD HTML
  * ######################
 */
 
-let welcomeHTML;
-let gettingStartedHTML;
-let documentationHTML;
-let blogHTML;
+const articlePathDict = Object.freeze({
+	[ARTICLE_TYPE.WELCOME]: "html/welcome.html",
+	[ARTICLE_TYPE.GETTING_STARTED]: "html/getting-started.html",
+	[ARTICLE_TYPE.DOCUMENTATION]: "html/documizer.html",
+	[ARTICLE_TYPE.BLOG]: "html/blog.html",
+});
 
-async function initHTML() {
-	welcomeHTML = await UTILITY.fetchFileContent("html/welcome.html");
-	gettingStartedHTML = await UTILITY.fetchFileContent("html/getting-started.html");
-	documentationHTML = await UTILITY.fetchFileContent("html/documizer.html");
-	blogHTML = await UTILITY.fetchFileContent("html/blog.html");
+const articleHTMLDict = {
+	[ARTICLE_TYPE.WELCOME]: undefined,
+	[ARTICLE_TYPE.GETTING_STARTED]: undefined,
+	[ARTICLE_TYPE.DOCUMENTATION]: undefined,
+	[ARTICLE_TYPE.BLOG]: undefined,
+};
+
+async function getArticleHTML(articleType) {
+	if (articleHTMLDict[articleType] === undefined) {
+		articleHTMLDict[articleType] = await UTILITY.fetchFileContent(articlePathDict[articleType]);
+	}
+	return articleHTMLDict[articleType];
 }
 
 /* 
@@ -25,32 +41,13 @@ async function initHTML() {
 */
 
 let articleElement = document.querySelector("article");
-let activeArticle;
+let activeArticleKey = "activeArticle";
 
-const ARTICLE_TYPE = Object.freeze({
-	WELCOME: 0,
-	GETTING_STARTED: 1,
-	DOCUMENTATION: 2,
-	BLOG: 3,
-});
-
-function setArticle(article) {
+async function setArticle(articleType) {
 	try {
-		if (article === ARTICLE_TYPE.WELCOME) {
-			articleElement.innerHTML = welcomeHTML;
-			activeArticle = ARTICLE_TYPE.WELCOME;
-		}
-		else if (article === ARTICLE_TYPE.GETTING_STARTED) {
-			articleElement.innerHTML = gettingStartedHTML;
-			activeArticle = ARTICLE_TYPE.GETTING_STARTED;
-		}
-		else if (article === ARTICLE_TYPE.DOCUMENTATION) {
-			articleElement.innerHTML = documentationHTML;
-			activeArticle = ARTICLE_TYPE.DOCUMENTATION;
-		}
-		else if (article === ARTICLE_TYPE.BLOG) {
-			articleElement.innerHTML = blogHTML;
-			activeArticle = ARTICLE_TYPE.BLOG;
+		articleElement.innerHTML = await getArticleHTML(articleType);
+		if (UTILITY.hasSessionStorage()) {
+			sessionStorage.setItem(activeArticleKey, articleType);
 		}
 	} catch (error) {
 		console.error("Error setting article content! Error: ", error);
@@ -63,9 +60,15 @@ function setArticle(article) {
  * ######################
 */
 
-const highlightTransparentColor = "#0be88160";
+function elementToArticleType(element) {
+	if (element.classList.contains("button-welcome")) return ARTICLE_TYPE.WELCOME;
+	else if (element.classList.contains("button-getting-started")) return ARTICLE_TYPE.GETTING_STARTED;
+	else if (element.classList.contains("button-documentation")) return ARTICLE_TYPE.DOCUMENTATION;
+	else if (element.classList.contains("button-blog")) return ARTICLE_TYPE.BLOG;
+	else console.error("Failure to convert element to article type");
+}
 
-function handleButtonSidebarLeftClick(event) {
+async function handleButtonSidebarLeftClick(event) {
 	// Reset default color
 	const buttonSidebarLeftList = document.getElementsByClassName("button-sidebar-left");
 	for (let i = 0; i < buttonSidebarLeftList.length; i++) {
@@ -73,14 +76,12 @@ function handleButtonSidebarLeftClick(event) {
 		buttonSidebarLeftList[i].style.borderWidth = "1px";
 	}
 	// Set active color
+	const highlightTransparentColor = "#0be88160";
 	event.currentTarget.style.backgroundColor = highlightTransparentColor;
 	event.currentTarget.style.borderWidth = "3px";
 
-	// Set active article
-	if (event.currentTarget.id === "button-welcome") setArticle(ARTICLE_TYPE.WELCOME);
-	else if (event.currentTarget.id === "button-getting-started") setArticle(ARTICLE_TYPE.GETTING_STARTED);
-	else if (event.currentTarget.id === "button-documentation") setArticle(ARTICLE_TYPE.DOCUMENTATION);
-	else if (event.currentTarget.id === "button-blog") setArticle(ARTICLE_TYPE.BLOG);
+	// Set article
+	await setArticle(elementToArticleType(event.currentTarget));
 }
 
-export { initHTML, handleButtonSidebarLeftClick };
+export { handleButtonSidebarLeftClick };

@@ -18,4 +18,21 @@ async function fetchFileContent(filePath) {
 	}
 }
 
-export { fetchFileContent };
+/* 
+ * ######################
+ * CHECK SESSION STORAGE
+ * ######################
+*/
+
+function hasSessionStorage() {
+	try {
+		const k = "__test__";
+		window.sessionStorage.setItem(k, k);
+		window.sessionStorage.removeItem(k);
+		return true;
+	} catch {
+		return false;
+	}
+}
+
+export { fetchFileContent, hasSessionStorage };
