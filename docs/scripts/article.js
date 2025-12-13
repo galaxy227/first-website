@@ -61,16 +61,16 @@ async function setArticle(articleType) {
 */
 
 function elementToArticleType(element) {
-	if (element.classList.contains("button-welcome")) return ARTICLE_TYPE.WELCOME;
-	else if (element.classList.contains("button-getting-started")) return ARTICLE_TYPE.GETTING_STARTED;
-	else if (element.classList.contains("button-documentation")) return ARTICLE_TYPE.DOCUMENTATION;
-	else if (element.classList.contains("button-blog")) return ARTICLE_TYPE.BLOG;
+	if (element.classList.contains("js-page-welcome")) return ARTICLE_TYPE.WELCOME;
+	else if (element.classList.contains("js-page-getting-started")) return ARTICLE_TYPE.GETTING_STARTED;
+	else if (element.classList.contains("js-page-documentation")) return ARTICLE_TYPE.DOCUMENTATION;
+	else if (element.classList.contains("js-page-blog")) return ARTICLE_TYPE.BLOG;
 	else console.error("Failure to convert element to article type");
 }
 
 async function handleButtonSidebarLeftClick(event) {
 	// Reset default color
-	const buttonSidebarLeftList = document.getElementsByClassName("button-sidebar-left");
+	const buttonSidebarLeftList = document.getElementsByClassName("button-page-selector-sidebar");
 	for (let i = 0; i < buttonSidebarLeftList.length; i++) {
 		buttonSidebarLeftList[i].style.backgroundColor = "transparent";
 		buttonSidebarLeftList[i].style.borderWidth = "1px";

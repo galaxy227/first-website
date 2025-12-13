@@ -22,15 +22,20 @@
 			</button>
 		</header>
 		<main>
-			<aside>
-				<button class="button-discreet button-sidebar button-sidebar-left button-welcome">Welcome</button>
-				<button class="button-discreet button-sidebar button-sidebar-left button-getting-started">Getting Started</button>
-				<button class="button-discreet button-sidebar button-sidebar-left button-documentation">Documentation</button>
-				<button class="button-discreet button-sidebar button-sidebar-left button-blog">Blog</button>
+			<aside class="css-main-overlay">
+				<button class="button-discreet button-page-selector-sidebar js-page-welcome">Welcome</button>
+				<button class="button-discreet button-page-selector-sidebar js-page-getting-started">Getting Started</button>
+				<button class="button-discreet button-page-selector-sidebar js-page-documentation">Documentation</button>
+				<button class="button-discreet button-page-selector-sidebar js-page-blog">Blog</button>
 			</aside>
-			<div id="div-main-spacer"></div>
-			<aside></aside>
-			<article></article>
+			<aside class="css-main-overlay"></aside>
+			<article class="css-main-viewport"></article>
+			<div class="css-main-viewport" id="div-dropdown">
+				<button class="button-discreet button-page-selector-dropdown js-page-welcome">Welcome</button>
+				<button class="button-discreet button-page-selector-dropdown js-page-getting-started">Getting Started</button>
+				<button class="button-discreet button-page-selector-dropdown js-page-documentation">Documentation</button>
+				<button class="button-discreet button-page-selector-dropdown js-page-blog">Blog</button>
+			</div>
 		</main>
 	</body>
 </html>

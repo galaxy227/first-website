@@ -8,13 +8,15 @@
 
 :root {
 	/* Appearance */
-	--light-color: #222222;
-	--dark-color: #191919;
+	--text-color: #FFFFFF;
 	--highlight-color: #0be881;
 	--highlight-transparent: #0be88160;
-	--text-color: #FFFFFF;
+	--light-color: #303030;
+	--default-color: #222222;
+	--dark-color: #1A1A1A;
+	--lowlight-color: #131313;
 	/* Dimension */
-	--huge-text: 2rem;
+	--huge-text: 2.0rem;
 	--large-text: 1.4rem;
 	--medium-text: 1.2rem;
 	--small-text: 1.0rem;
@@ -22,11 +24,11 @@
 }
 @media (max-width: 1024px) {
 	:root {
-		--huge-text: 2.2rem;
+		--huge-text: 2.4rem;
 		--large-text: 1.6rem;
-		--medium-text: 1.4rem;
-		--small-text: 1.2rem;
-		--tiny-text: 0.8rem;
+		--medium-text: 1.2rem;
+		--small-text: 1.0rem;
+		--tiny-text: 0.9rem;
 	}
 }
 
@@ -45,7 +47,7 @@
 */
 
 html, body {
-	background-color: var(--light-color);
+	background-color: var(--default-color);
 
 	width: 100vw;
 	height: 100vh;
@@ -54,7 +56,7 @@ html, body {
 	overflow: hidden;
 }
 header {
-	background-color: var(--light-color);
+	background-color: var(--default-color);
 
 	width: 100%;
 	height: 5%;
@@ -67,6 +69,12 @@ header {
 	justify-content: space-between;
 	align-items: center;
 }
+@media (max-width: 1024px) {
+	header {
+		padding-left: 2.5%;
+		padding-right: 2.5%;
+	}
+}
 main {
 	position: absolute;
 	width: 100%;
@@ -74,6 +82,19 @@ main {
 
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
+}
+.css-main-viewport {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+
+	overflow-y: auto;
+	overflow-wrap: normal;
+}
+.css-main-overlay {
+	z-index: 2;
 }
 
 /* 
@@ -83,18 +104,12 @@ main {
 */
 
 article {
-	background-color: var(--dark-color);
+	background-color: var(--lowlight-color);
 
-	position: absolute;
-	width: 100%;
-	height: 100%;
 	padding-left: 25%;
 	padding-right: 25%;
 	padding-top: 1%;
 	padding-bottom: 1%;
-
-	overflow-y: auto;
-	overflow-wrap: normal;
 }
 @media (max-width: 1024px) {
 	article {
@@ -102,16 +117,6 @@ article {
 		padding-right: 5%;
 	}
 }
-
-#div-main-spacer {
-	width: 50%;
-}
-@media (max-width: 1024px) {
-	#div-article-spacer {
-		width: 100%;
-	}
-}
-
 
 /* 
 ######################################
@@ -121,10 +126,9 @@ article {
 
 aside {
 	width: 25%;
-	padding-top: 5%;
+	padding-top: 2.5%;
 	padding-left: 5%;
 	padding-right: 5%;
-	z-index: 1;
 
 	display: flex;
 	flex-direction: column;
@@ -137,47 +141,77 @@ aside {
 
 /* 
 ######################################
-	CONTENT TODO
+	DROPDOWN
 ######################################
 */
 
+#div-dropdown {
+	display: none;
+}
+@media (max-width: 1024px) {
+	#div-dropdown {
+		background-color: var(--dark-color);
+
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+/* 
+######################################
+	CONTENT
+######################################
+*/
+
+button:hover {
+	cursor: pointer;
+}
+
 .button-discreet {
-	/* Appearance */
 	background-color: transparent;
+
 	border-radius: 0;
 	border: none;
 }
-.button-discreet:hover {
-	/* Appearance */
-	cursor: pointer;
-}
-.button-sidebar {
-	/* Appearance */
+
+.button-page-selector-dropdown {
 	text-align: left;
-	font-size: 1.2rem;
-	border-left: 1px solid var(--text-color);
-	/* Dimension */
+	font-size: var(--medium-text);
+
+	width: 100%;
+	padding: 1%;
+	padding-left: 2.5%;
+	border-bottom: 1px solid var(--light-color);
+}
+.button-page-selector-dropdown:hover {
+	background-color: var(--highlight-transparent);
+}
+
+.button-page-selector-sidebar {
+	text-align: left;
+	font-size: var(--medium-text);
+
 	padding-left: 10%;
 	padding-top: 2.5%;
 	padding-bottom: 2.5%;
-	/* Content */
-	display: flex;
-	flex-direction: row;
-	align-items: center;
+	border-left: 1px solid var(--text-color);
 }
-.button-sidebar:hover {
-	/* Appearance */
+.button-page-selector-sidebar:hover {
 	color: var(--highlight-color);
 	text-decoration: underline;
 }
 
 #button-title {
-	/* Appearance */
 	color: var(--highlight-color);
 	font-size: var(--large-text);
 	font-family: monospace;
-	/* Dimension */
+
 	position: relative;
+}
+@media (max-width: 1024px) {
+	#button-title {
+		font-size: var(--medium-text);
+	}
 }
 
 #button-hamburger {
@@ -185,14 +219,11 @@ aside {
 }
 @media (max-width: 1024px) {
 	#button-hamburger {
-		/* Dimension */
-		display: block;
-		box-sizing: border-box;
-		width: 2.5rem;
-		height: 2rem;
 		position: relative;
-		right: 5%;
-		/* Content */
+		width: 2rem;
+		height: 2rem;
+		box-sizing: border-box;
+
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -205,11 +236,11 @@ aside {
 }
 @media (max-width: 1024px) {
 	.div-hamburger {
-		/* Appearance */
 		background-color: var(--highlight-color);
-		/* Dimension */
-		display: block;
+
 		width: 100%;
 		height: 5%;
+
+		display: block;
 	}
 }
