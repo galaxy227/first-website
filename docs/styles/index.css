@@ -152,7 +152,6 @@ aside {
 	#div-dropdown {
 		background-color: var(--dark-color);
 
-		display: flex;
 		flex-direction: column;
 	}
 }
@@ -162,6 +161,11 @@ aside {
 	CONTENT
 ######################################
 */
+
+img {
+	max-width: 100%;
+	height: auto;
+}
 
 button:hover {
 	cursor: pointer;
@@ -214,33 +218,22 @@ button:hover {
 	}
 }
 
-#button-hamburger {
+#button-menu-dropdown {
 	display: none;
 }
 @media (max-width: 1024px) {
-	#button-hamburger {
+	#button-menu-dropdown {
 		position: relative;
-		width: 2rem;
-		height: 2rem;
+		width: 3rem;
+		height: 3rem;
 		box-sizing: border-box;
 
 		display: flex;
-		flex-direction: column;
 		justify-content: center;
-		gap: 25%;
+		align-items: center;
 	}
 }
 
-.div-hamburger {
-	display: none;
-}
-@media (max-width: 1024px) {
-	.div-hamburger {
-		background-color: var(--highlight-color);
-
-		width: 100%;
-		height: 5%;
-
-		display: block;
-	}
+#img-menu-dropdown {
+	filter: invert(69%) sepia(85%) saturate(552%) hue-rotate(90deg) brightness(94%) contrast(92%);
 }
