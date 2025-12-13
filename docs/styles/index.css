@@ -31,10 +31,11 @@
 }
 
 * {
-	/* Appearance */
 	color: var(--text-color);
 	overflow-wrap: anywhere;
 	font-size: var(--small-text);
+
+	box-sizing: border-box;
 }
 
 /* 
@@ -43,24 +44,34 @@
 ######################################
 */
 
-html {
-	/* Appearance */
+html, body {
 	background-color: var(--light-color);
-	/* Dimension */
-	min-height: 100vh;
-}
-body {
-	/* Dimension */
-	width: 100%;
-	height: 100%;
+
+	width: 100vw;
+	height: 100vh;
 	margin: 0;
-	box-sizing: border-box;
+
+	overflow: hidden;
+}
+header {
+	background-color: var(--light-color);
+
+	width: 100%;
+	height: 5%;
+	top: 0;
+	padding-left: 5%;
+	padding-right 5%;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
 }
 main {
-	/* Appearance */
-	background-color: var(--dark-color);
-	min-height: calc(100vh - 4 * var(--large-text));
-	/* Content */
+	position: absolute;
+	width: 100%;
+	height: 95%;
+
 	display: flex;
 	flex-direction: row;
 }
@@ -72,81 +83,61 @@ main {
 */
 
 article {
-	font-size: var(--small-text);
-	/* Dimension */
-	position: relative;
-	width: 50%;
-	left: 25%;
+	background-color: var(--dark-color);
+
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	padding-left: 25%;
+	padding-right: 25%;
 	padding-top: 1%;
 	padding-bottom: 1%;
-	/* Content */
-	display: flex;
-	flex-direction: column;
+
+	overflow-y: auto;
+	overflow-wrap: normal;
 }
 @media (max-width: 1024px) {
 	article {
-		/* Dimension */
-		width: 90%;
-		left: 5%;
+		padding-left: 5%;
+		padding-right: 5%;
 	}
 }
 
+#div-main-spacer {
+	width: 50%;
+}
+@media (max-width: 1024px) {
+	#div-article-spacer {
+		width: 100%;
+	}
+}
+
+
 /* 
 ######################################
-	STICKY
+	ASIDE
 ######################################
 */
 
-.div-sticky {
-	/* Dimension */
-	position: sticky;
-	top: 0;
-	z-index: 1;
-}
-
-header {
-	/* Appearance */
-	background-color: var(--light-color);
-	/* Content */
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.div-aside {
-	/* Content */
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
 aside {
-	/* Dimension */
-	width: 15%;
-	position: absolute;
-	top: 250%;
-	/* Content */
+	width: 25%;
+	padding-top: 5%;
+	padding-left: 5%;
+	padding-right: 5%;
+	z-index: 1;
+
 	display: flex;
 	flex-direction: column;
 }
 @media (max-width: 1024px) {
 	aside {
-		/* Dimension */
 		display: none;
 	}
-}
-#aside-left {
-	/* Dimension */
-	left: 5%;
-}
-#aside-right {
-	/* Dimension */
-	right: 5%;
 }
 
 /* 
 ######################################
-	CONTENT
+	CONTENT TODO
 ######################################
 */
 
@@ -187,8 +178,6 @@ aside {
 	font-family: monospace;
 	/* Dimension */
 	position: relative;
-	left: 5%;
-	padding: 0.5%;
 }
 
 #button-hamburger {
