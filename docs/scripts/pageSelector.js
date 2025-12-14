@@ -81,7 +81,7 @@ async function selectPage(argument) {
 }
 
 async function handleButtonPageSelectorClick(event) {
-	selectPage(event.currentTarget);
+	await selectPage(event.currentTarget);
 	// Dropdown
 	if (event.currentTarget.classList.contains("button-page-selector-dropdown")) {
 		setDropdown(false);
