@@ -9,7 +9,7 @@ import * as TITLE from "./title.js";
  * ######################
 */
 
-function init() {
+async function init() {
 	// Page selector, sidebar
 	const buttonSidebarLeftList = document.getElementsByClassName("button-page-selector-sidebar");
 	for (let i = 0; i < buttonSidebarLeftList.length; i++) {
@@ -26,6 +26,17 @@ function init() {
 	// Title
 	const buttonTitle = document.getElementById("button-title");
 	buttonTitle.addEventListener("click", TITLE.handleButtonTitleClick);
+
+	// Reload active article
+	try {
+		if (UTILITY.hasSessionStorage()) {
+			let activeArticle = sessionStorage.getItem(ARTICLE.activeArticleKey);
+			await PAGE_SELECTOR.selectPage(activeArticle);
+		}
+	}
+	catch {
+		console.error("Failure to load active article from session storage after refresh");
+	}
 }
 
 /* 
