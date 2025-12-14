@@ -27,15 +27,17 @@ async function init() {
 	const buttonTitle = document.getElementById("button-title");
 	buttonTitle.addEventListener("click", TITLE.handleButtonTitleClick);
 
-	// Reload active article
+	// Load active article
 	try {
+		let activeArticle;
 		if (UTILITY.hasSessionStorage()) {
-			let activeArticle = sessionStorage.getItem(ARTICLE.activeArticleKey);
-			await PAGE_SELECTOR.selectPage(activeArticle);
+			activeArticle = sessionStorage.getItem(ARTICLE.activeArticleKey);
+			if (activeArticle) await PAGE_SELECTOR.selectPage(activeArticle);
 		}
+		if (!activeArticle) await PAGE_SELECTOR.selectPage(ARTICLE.ARTICLE_TYPE.WELCOME);
 	}
-	catch {
-		console.error("Failure to load active article from session storage after refresh");
+	catch (error) {
+		console.error("Failure to load active article from session storage after refresh:\n" + error);
 	}
 }
 

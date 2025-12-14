@@ -71,4 +71,4 @@ async function setArticle(argument) {
 	}
 }
 
-export { activeArticleType, activeArticleKey, setArticle };
+export { ARTICLE_TYPE, activeArticleType, activeArticleKey, setArticle };
