@@ -1,10 +1,10 @@
-import * as UTILITY from "./utility.js"
+import * as UTILITY from "./utility.js";
 
 const ARTICLE_TYPE = Object.freeze({
-	WELCOME: "WELCOME",
-	GETTING_STARTED: "GETTING_STARTED",
-	DOCUMENTATION: "DOCUMENTATION",
-	BLOG: "BLOG",
+	WELCOME: "js-page-welcome",
+	GETTING_STARTED: "js-page-getting-started",
+	DOCUMENTATION: "js-page-documentation",
+	BLOG: "js-page-blog",
 });
 
 /* 
@@ -36,16 +36,33 @@ async function getArticleHTML(articleType) {
 
 /* 
  * ######################
- * SET ARTICLE
+ * ARTICLE
  * ######################
 */
 
-let articleElement = document.querySelector("article");
 let activeArticleKey = "activeArticle";
+let activeArticleType;
 
-async function setArticle(articleType) {
+function elementToArticleType(element) {
+	if (element.classList.contains(ARTICLE_TYPE.WELCOME)) return ARTICLE_TYPE.WELCOME;
+	else if (element.classList.contains(ARTICLE_TYPE.GETTING_STARTED)) return ARTICLE_TYPE.GETTING_STARTED;
+	else if (element.classList.contains(ARTICLE_TYPE.DOCUMENTATION)) return ARTICLE_TYPE.DOCUMENTATION;
+	else if (element.classList.contains(ARTICLE_TYPE.BLOG)) return ARTICLE_TYPE.BLOG;
+	else {
+		console.error("Failure to convert element to article type");
+		return undefined;
+	}
+}
+
+async function setArticle(argument) {
+	// Assume argument is articleType
+	let articleType = argument;
+	// Overwrite if argument is DOM element
+	if (argument instanceof HTMLElement) articleType = elementToArticleType(argument);
 	try {
-		articleElement.innerHTML = await getArticleHTML(articleType);
+		const article = document.querySelector("article");
+		article.innerHTML = await getArticleHTML(articleType);
+		activeArticleType = articleType;
 		if (UTILITY.hasSessionStorage()) {
 			sessionStorage.setItem(activeArticleKey, articleType);
 		}
@@ -54,34 +71,4 @@ async function setArticle(articleType) {
 	}
 }
 
-/* 
- * ######################
- * SIDEBAR LEFT
- * ######################
-*/
-
-function elementToArticleType(element) {
-	if (element.classList.contains("js-page-welcome")) return ARTICLE_TYPE.WELCOME;
-	else if (element.classList.contains("js-page-getting-started")) return ARTICLE_TYPE.GETTING_STARTED;
-	else if (element.classList.contains("js-page-documentation")) return ARTICLE_TYPE.DOCUMENTATION;
-	else if (element.classList.contains("js-page-blog")) return ARTICLE_TYPE.BLOG;
-	else console.error("Failure to convert element to article type");
-}
-
-async function handleButtonSidebarLeftClick(event) {
-	// Reset default color
-	const buttonSidebarLeftList = document.getElementsByClassName("button-page-selector-sidebar");
-	for (let i = 0; i < buttonSidebarLeftList.length; i++) {
-		buttonSidebarLeftList[i].style.backgroundColor = "transparent";
-		buttonSidebarLeftList[i].style.borderWidth = "1px";
-	}
-	// Set active color
-	const highlightTransparentColor = "#0be88160";
-	event.currentTarget.style.backgroundColor = highlightTransparentColor;
-	event.currentTarget.style.borderWidth = "3px";
-
-	// Set article
-	await setArticle(elementToArticleType(event.currentTarget));
-}
-
-export { handleButtonSidebarLeftClick };
+export { activeArticleType, activeArticleKey, setArticle };

@@ -149,9 +149,10 @@ aside {
 	display: none;
 }
 @media (max-width: 1024px) {
-	#div-dropdown {
+	#div-dropdown.js-open {
 		background-color: var(--dark-color);
 
+		display: flex;
 		flex-direction: column;
 	}
 }
