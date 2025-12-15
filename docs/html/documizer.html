@@ -1,1 +1,97 @@
-<p>Here is what the documizer should show...</p>
+<style>
+	.documizer-comment { border-top: 1px solid grey; }
+	.documizer-signature { display: flex; flex-direction: column; }
+	.documizer-signature-file { text-align: right; padding-top: 0.5rem; padding-bottom: 0.5rem; }
+	.documizer-signature-source { width: fit-content; background-color: #303030; }
+	.documizer-title { font-size: 1.3rem; }
+</style>
+<div class="documizer-comment">
+	<div class="documizer-signature">
+		<code class="documizer-signature-file">GSDL.h</code>
+		<code class="documizer-signature-source">void init()</code>
+	</div>
+	<p class="documizer-note">Initialize gleeg.</p>
+	<h1 class="documizer-title">Notes</h1>
+	<p class="documizer-section">Be sure to call end() to free memory allocated by init().</p>
+</div>
+<div class="documizer-comment">
+	<div class="documizer-signature">
+		<code class="documizer-signature-file">GSDL.h</code>
+		<code class="documizer-signature-source">void end()</code>
+	</div>
+	<p class="documizer-note">Clean memory associated with gleeg.</p>
+</div>
+<div class="documizer-comment">
+	<div class="documizer-signature">
+		<code class="documizer-signature-file">GSDL.h</code>
+		<code class="documizer-signature-source">bool is_quit()</code>
+	</div>
+	<p class="documizer-note">Check if the user has prompted to quit the application.</p>
+	<h1 class="documizer-title">Return</h1>
+	<p class="documizer-section">Returns true once prompted to quit, such as clicking to close the application's window.</p>
+</div>
+<div class="documizer-comment">
+	<div class="documizer-signature">
+		<code class="documizer-signature-file">GSDL.h</code>
+		<code class="documizer-signature-source">void update()</code>
+	</div>
+	<p class="documizer-note">Update the game engine state, such as processing events.</p>
+</div>
+<div class="documizer-comment">
+	<div class="documizer-signature">
+		<code class="documizer-signature-file">GSDL.h</code>
+		<code class="documizer-signature-source">void render()</code>
+	</div>
+	<p class="documizer-note">Render the current game engine state.</p>
+</div>
+<div class="documizer-comment">
+	<div class="documizer-signature">
+		<code class="documizer-signature-file">GSDL.h</code>
+		<code class="documizer-signature-source">float get_delta_time()</code>
+	</div>
+	<p class="documizer-note">Check if the user has prompted to quit the application.</p>
+	<h1 class="documizer-title">Return</h1>
+	<p class="documizer-section">Returns the time since last frame in seconds.</p>
+</div>
+<div class="documizer-comment">
+	<div class="documizer-signature">
+		<code class="documizer-signature-file">GSDL_log.h</code>
+		<code class="documizer-signature-source">void log_debug_(const string& debug_message, const string& caller_file_name, const unsigned int caller_line)</code>
+	</div>
+	<p class="documizer-note">Write a debug message to the log file located in the binary directory.</p>
+	<h1 class="documizer-title">Parameters</h1>
+	<p class="documizer-section"></p>
+	<p class="documizer-note"><code class="documizer-signature-source">debug_message:</code> The message to be logged.</p>
+	<h1 class="documizer-title">Notes</h1>
+	<p class="documizer-section">Do not provide more than one argument. The parameters caller_file_name and caller_line are managed by the preprocessor.</p>
+</div>
+<div class="documizer-comment">
+	<div class="documizer-signature">
+		<code class="documizer-signature-file">GSDL_log.h</code>
+		<code class="documizer-signature-source">void log_error_(const string& error_message, const string& caller_file_name, const unsigned int caller_line)</code>
+	</div>
+	<p class="documizer-note">Write an error message to the log file located in the binary directory.</p>
+	<h1 class="documizer-title">Parameters</h1>
+	<p class="documizer-section"></p>
+	<p class="documizer-note"><code class="documizer-signature-source">error_message:</code> The message to be logged.</p>
+	<h1 class="documizer-title">Notes</h1>
+	<p class="documizer-section">Do not provide more than one argument. The parameters caller_file_name and caller_line are managed by the preprocessor.</p>
+</div>
+<div class="documizer-comment">
+	<div class="documizer-signature">
+		<code class="documizer-signature-file">GSDL_file.h</code>
+		<code class="documizer-signature-source">string get_exe_dir()</code>
+	</div>
+	<p class="documizer-note">Get the directory path where the game's binary is stored.</p>
+	<h1 class="documizer-title">Return</h1>
+	<p class="documizer-section">Path of specified directory returned as string with forward slash as trailing character.</p>
+</div>
+<div class="documizer-comment">
+	<div class="documizer-signature">
+		<code class="documizer-signature-file">GSDL_file.h</code>
+		<code class="documizer-signature-source">string get_asset_dir()</code>
+	</div>
+	<p class="documizer-note">Get the directory path where the game's data is stored.</p>
+	<h1 class="documizer-title">Return</h1>
+	<p class="documizer-section">Path of specified directory returned as string with forward slash as trailing character.</p>
+</div>
