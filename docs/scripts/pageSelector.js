@@ -68,15 +68,25 @@ function handleButtonMenuDropdownClick() {
 */
 
 async function selectPage(argument) {
-	// Argument is DOM element
-	if (argument instanceof HTMLElement) {
-		await ARTICLE.setArticle(argument);
-		setSidebar(ARTICLE.activeArticleType);
+	// Overwrite if argument is DOM element
+	if (argument instanceof HTMLElement) argument = ARTICLE.elementToArticleType(argument);
+	// Check valid article type
+	if (!ARTICLE.isValidArticleType(argument)) {
+		console.error("Invalid argument to set article!");
+		return;
 	}
-	// Argument is articleType
-	else {
-		await ARTICLE.setArticle(argument);
-		setSidebar(argument);
+	// Set article
+	let articleType = argument;
+	try {
+		// Article content
+		const article = document.querySelector("article");
+		article.innerHTML = await ARTICLE.getArticleHTML(articleType);
+		// Set active article
+		ARTICLE.setActiveArticle(articleType);
+		// Sidebar
+		setSidebar(articleType);
+	} catch (error) {
+		console.error("Error setting article content! Error: ", error);
 	}
 }
 

@@ -29,12 +29,9 @@ async function init() {
 
 	// Load active article
 	try {
-		let activeArticle;
-		if (UTILITY.hasSessionStorage()) {
-			activeArticle = sessionStorage.getItem(ARTICLE.activeArticleKey);
-			if (activeArticle) await PAGE_SELECTOR.selectPage(activeArticle);
-		}
-		if (!activeArticle) await PAGE_SELECTOR.selectPage(ARTICLE.ARTICLE_TYPE.WELCOME);
+		let activeArticle = ARTICLE.getActiveArticle();
+		if (activeArticle) await PAGE_SELECTOR.selectPage(activeArticle);
+		else await PAGE_SELECTOR.selectPage(ARTICLE.ARTICLE_TYPE.WELCOME);
 	}
 	catch (error) {
 		console.error("Failure to load active article from session storage after refresh:\n" + error);

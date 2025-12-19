@@ -40,8 +40,14 @@ async function getArticleHTML(articleType) {
  * ######################
 */
 
-let activeArticleKey = "activeArticle";
-let activeArticleType;
+function isValidArticleType(argument) {
+	for (const key in ARTICLE_TYPE) {
+		if (Object.prototype.hasOwnProperty.call(ARTICLE_TYPE, key) && ARTICLE_TYPE[key] === argument) {
+			return true;
+		}
+	}
+	return false;
+}
 
 function elementToArticleType(element) {
 	if (element.classList.contains(ARTICLE_TYPE.WELCOME)) return ARTICLE_TYPE.WELCOME;
@@ -54,21 +60,35 @@ function elementToArticleType(element) {
 	}
 }
 
-async function setArticle(argument) {
-	// Assume argument is articleType
-	let articleType = argument;
-	// Overwrite if argument is DOM element
-	if (argument instanceof HTMLElement) articleType = elementToArticleType(argument);
-	try {
-		const article = document.querySelector("article");
-		article.innerHTML = await getArticleHTML(articleType);
-		activeArticleType = articleType;
-		if (UTILITY.hasSessionStorage()) {
-			sessionStorage.setItem(activeArticleKey, articleType);
-		}
-	} catch (error) {
-		console.error("Error setting article content! Error: ", error);
+/* 
+ * ######################
+ * ACTIVE ARTICLE
+ * ######################
+*/
+
+let activeArticleKey = "activeArticle";
+
+function getActiveArticle() {
+	if (UTILITY.hasSessionStorage()) {
+		return sessionStorage.getItem(activeArticleKey);
+	}
+	else {
+		console.error("Failure to access session storage while attempting to get active article");
+	}
+}
+function setActiveArticle(argument) {
+	// Validate argument
+	if (isValidArticleType()) {
+		console.error("Failure to validate argument while attempting to set active article");
+		return;
+	}
+	// Set active article
+	if (UTILITY.hasSessionStorage()) {
+		sessionStorage.setItem(activeArticleKey, argument);
+	}
+	else {
+		console.error("Failure to access session storage while attempting to set active article");
 	}
 }
 
-export { ARTICLE_TYPE, activeArticleType, activeArticleKey, setArticle };
+export { ARTICLE_TYPE, getArticleHTML, isValidArticleType, elementToArticleType, getActiveArticle, setActiveArticle };
