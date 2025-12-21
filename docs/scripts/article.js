@@ -1,5 +1,11 @@
 import * as UTILITY from "./utility.js";
 
+/* 
+ * ######################
+ * MAPS
+ * ######################
+*/
+
 const ARTICLE_TYPE = Object.freeze({
 	WELCOME: "js-page-welcome",
 	GETTING_STARTED: "js-page-getting-started",
@@ -7,16 +13,10 @@ const ARTICLE_TYPE = Object.freeze({
 	BLOG: "js-page-blog",
 });
 
-/* 
- * ######################
- * LOAD HTML
- * ######################
-*/
-
 const articlePathDict = Object.freeze({
 	[ARTICLE_TYPE.WELCOME]: "html/welcome.html",
 	[ARTICLE_TYPE.GETTING_STARTED]: "html/getting-started.html",
-	[ARTICLE_TYPE.DOCUMENTATION]: "html/documizer.html",
+	[ARTICLE_TYPE.DOCUMENTATION]: "html/documentation.html",
 	[ARTICLE_TYPE.BLOG]: "html/blog.html",
 });
 
@@ -27,18 +27,18 @@ const articleHTMLDict = {
 	[ARTICLE_TYPE.BLOG]: undefined,
 };
 
+/* 
+ * ######################
+ * HELPER
+ * ######################
+*/
+
 async function getArticleHTML(articleType) {
 	if (articleHTMLDict[articleType] === undefined) {
 		articleHTMLDict[articleType] = await UTILITY.fetchFileContent(articlePathDict[articleType]);
 	}
 	return articleHTMLDict[articleType];
 }
-
-/* 
- * ######################
- * ARTICLE
- * ######################
-*/
 
 function isValidArticleType(argument) {
 	for (const key in ARTICLE_TYPE) {
@@ -66,6 +66,7 @@ function elementToArticleType(element) {
  * ######################
 */
 
+let activeArticle;
 let activeArticleKey = "activeArticle";
 
 function getActiveArticle() {
@@ -74,6 +75,7 @@ function getActiveArticle() {
 	}
 	else {
 		console.error("Failure to access session storage while attempting to get active article");
+		return activeArticle;
 	}
 }
 function setActiveArticle(argument) {
@@ -89,6 +91,7 @@ function setActiveArticle(argument) {
 	else {
 		console.error("Failure to access session storage while attempting to set active article");
 	}
+	activeArticle = argument;
 }
 
 export { ARTICLE_TYPE, getArticleHTML, isValidArticleType, elementToArticleType, getActiveArticle, setActiveArticle };

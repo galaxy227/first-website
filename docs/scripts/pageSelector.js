@@ -13,10 +13,9 @@ function setSidebar(articleType) {
 		buttonSidebarLeftList[i].style.backgroundColor = "transparent";
 		buttonSidebarLeftList[i].style.borderWidth = "1px";
 	}
-	// Set active color TODO
+	// Set active color
 	const highlightTransparentColor = "#0be88160";
 	const buttonSidebar = document.getElementsByClassName("button-page-selector-sidebar " + articleType)[0];
-	if (!buttonSidebar) console.error("Footjob now!");
 	buttonSidebar.style.backgroundColor = highlightTransparentColor;
 	buttonSidebar.style.borderWidth = "3px";
 }
@@ -27,7 +26,7 @@ function setSidebar(articleType) {
  * ######################
 */
 
-let is_hamburger = true;
+let is_menu_dropdown_open = true;
 const dropdown = document.getElementById("div-dropdown");
 const buttonMenuDropdown = document.getElementById("button-menu-dropdown");
 const image = buttonMenuDropdown.querySelector("img");
@@ -37,14 +36,14 @@ function setDropdown(is_open) {
 		console.error("Failure to query image element for menu dropdown");
 	}
 	if (is_open) {
-		is_hamburger = false;
+		is_menu_dropdown_open = false;
 		image.src = "data/close.svg";
 		dropdown.classList.add("js-open");
 		buttonMenuDropdown.style.width = "2.5rem";
 		buttonMenuDropdown.style.height = "2.5rem";
 	} 
 	else {
-		is_hamburger = true;
+		is_menu_dropdown_open = true;
 		image.src = "data/hamburger.svg";
 		dropdown.classList.remove("js-open");
 		buttonMenuDropdown.style.width = "3rem";
@@ -53,7 +52,7 @@ function setDropdown(is_open) {
 }
 
 function handleButtonMenuDropdownClick() {
-	if (is_hamburger) {
+	if (is_menu_dropdown_open) {
 		setDropdown(true);
 	}
 	else {
@@ -66,7 +65,6 @@ function handleButtonMenuDropdownClick() {
  * PAGE SELECTOR
  * ######################
 */
-
 async function selectPage(argument) {
 	// Overwrite if argument is DOM element
 	if (argument instanceof HTMLElement) argument = ARTICLE.elementToArticleType(argument);
@@ -99,4 +97,35 @@ async function handleButtonPageSelectorClick(event) {
 	}
 }
 
-export { handleButtonMenuDropdownClick, selectPage, handleButtonPageSelectorClick };
+/* 
+ * ######################
+ * INIT
+ * ######################
+*/
+
+async function init() {
+	// Page selector, sidebar
+	const buttonSidebarLeftList = document.getElementsByClassName("button-page-selector-sidebar");
+	for (let i = 0; i < buttonSidebarLeftList.length; i++) {
+		buttonSidebarLeftList[i].addEventListener("click", handleButtonPageSelectorClick);
+	}
+	// Page selector, dropdown
+	const buttonDropdownList = document.getElementsByClassName("button-page-selector-dropdown");
+	for (let i = 0; i < buttonSidebarLeftList.length; i++) {
+		buttonDropdownList[i].addEventListener("click", handleButtonPageSelectorClick);
+	}
+	// Menu dropdown button
+	const buttonMenuDropdown = document.getElementById("button-menu-dropdown");
+	buttonMenuDropdown.addEventListener("click", handleButtonMenuDropdownClick);
+	// Load active article
+	try {
+		let activeArticle = ARTICLE.getActiveArticle();
+		if (activeArticle) await selectPage(activeArticle);
+		else await selectPage(ARTICLE.ARTICLE_TYPE.WELCOME);
+	}
+	catch (error) {
+		console.error("Failure to load active article from session storage after refresh:\n" + error);
+	}
+}
+
+export { handleButtonMenuDropdownClick, selectPage, handleButtonPageSelectorClick, init };
