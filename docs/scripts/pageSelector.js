@@ -124,6 +124,7 @@ async function route(url) {
 	}
 	else {
 		await selectPage(ARTICLE.ARTICLE_TYPE.WELCOME);
+		url = "welcome";
 	}
 	// Update URL
 	window.location.hash = url;
