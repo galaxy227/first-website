@@ -1,5 +1,4 @@
 import * as PAGE_SELECTOR from "./pageSelector.js";
-import * as TITLE from "./title.js";
 
 /* 
  * ######################
@@ -8,7 +7,6 @@ import * as TITLE from "./title.js";
 */
 
 async function init() {
-	TITLE.init();
 	await PAGE_SELECTOR.init();
 }
 

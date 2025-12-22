@@ -60,38 +60,4 @@ function elementToArticleType(element) {
 	}
 }
 
-/* 
- * ######################
- * ACTIVE ARTICLE
- * ######################
-*/
-
-let activeArticle;
-let activeArticleKey = "activeArticle";
-
-function getActiveArticle() {
-	if (UTILITY.hasSessionStorage()) {
-		return sessionStorage.getItem(activeArticleKey);
-	}
-	else {
-		console.error("Failure to access session storage while attempting to get active article");
-		return activeArticle;
-	}
-}
-function setActiveArticle(argument) {
-	// Validate argument
-	if (isValidArticleType()) {
-		console.error("Failure to validate argument while attempting to set active article");
-		return;
-	}
-	// Set active article
-	if (UTILITY.hasSessionStorage()) {
-		sessionStorage.setItem(activeArticleKey, argument);
-	}
-	else {
-		console.error("Failure to access session storage while attempting to set active article");
-	}
-	activeArticle = argument;
-}
-
-export { ARTICLE_TYPE, getArticleHTML, isValidArticleType, elementToArticleType, getActiveArticle, setActiveArticle };
+export { ARTICLE_TYPE, getArticleHTML, isValidArticleType, elementToArticleType };

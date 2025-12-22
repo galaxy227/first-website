@@ -79,8 +79,6 @@ async function selectPage(argument) {
 		// Article content
 		const article = document.querySelector("article");
 		article.innerHTML = await ARTICLE.getArticleHTML(articleType);
-		// Set active article
-		ARTICLE.setActiveArticle(articleType);
 		// Sidebar
 		setSidebar(articleType);
 	} catch (error) {
@@ -88,13 +86,65 @@ async function selectPage(argument) {
 	}
 }
 
+/* 
+ * ######################
+ * ROUTE TODO
+ * ######################
+*/
+
+function articleTypeToURL(articleType) {
+	if (articleType === ARTICLE.ARTICLE_TYPE.WELCOME) return "welcome";
+	else if (articleType === ARTICLE.ARTICLE_TYPE.GETTING_STARTED) return "getting-started";
+	else if (articleType === ARTICLE.ARTICLE_TYPE.DOCUMENTATION) return "documentation";
+	else if (articleType === ARTICLE.ARTICLE_TYPE.BLOG) return "blog";
+	else {
+		console.error("Failure to convert article type to URL");
+		return null;
+	}
+}
+
+async function route(url) {
+	// Overwrite if url is DOM element
+	if (url instanceof HTMLElement) url = ARTICLE.elementToArticleType(url);
+	// Handle hash syntax
+	if (url.startsWith("#")) url = url.substring(1);
+	// Handle articleType conversion to URL
+	if (ARTICLE.isValidArticleType(url)) {
+		url = articleTypeToURL(url);
+	}
+	// Select page
+	if (url.startsWith("getting-started")) {
+		await selectPage(ARTICLE.ARTICLE_TYPE.GETTING_STARTED);
+	}
+	else if (url.startsWith("documentation")) {
+		await selectPage(ARTICLE.ARTICLE_TYPE.DOCUMENTATION);
+	}
+	else if (url.startsWith("blog")) {
+		await selectPage(ARTICLE.ARTICLE_TYPE.BLOG);
+	}
+	else {
+		await selectPage(ARTICLE.ARTICLE_TYPE.WELCOME);
+	}
+	// Update URL
+	window.location.hash = url;
+}
+
 async function handleButtonPageSelectorClick(event) {
 	const buttonPageSelector = event.currentTarget;
-	await selectPage(buttonPageSelector);
+	await route(buttonPageSelector);
 	// Dropdown
 	if (buttonPageSelector.classList.contains("button-page-selector-dropdown")) {
 		setDropdown(false);
 	}
+}
+
+async function handleButtonTitleClick() {
+	await route(ARTICLE.ARTICLE_TYPE.WELCOME);
+	setDropdown(false);
+}
+
+async function handleHashChange() {
+	route(window.location.hash);
 }
 
 /* 
@@ -117,15 +167,14 @@ async function init() {
 	// Menu dropdown button
 	const buttonMenuDropdown = document.getElementById("button-menu-dropdown");
 	buttonMenuDropdown.addEventListener("click", handleButtonMenuDropdownClick);
-	// Load active article
-	try {
-		let activeArticle = ARTICLE.getActiveArticle();
-		if (activeArticle) await selectPage(activeArticle);
-		else await selectPage(ARTICLE.ARTICLE_TYPE.WELCOME);
-	}
-	catch (error) {
-		console.error("Failure to load active article from session storage after refresh:\n" + error);
-	}
+	// Title
+	const buttonTitle = document.getElementById("button-title");
+	buttonTitle.addEventListener("click", handleButtonTitleClick);
+	// Window hashchange
+	window.addEventListener("hashchange", handleHashChange);
+
+	// Route new page
+	await route(window.location.hash)
 }
 
-export { handleButtonMenuDropdownClick, selectPage, handleButtonPageSelectorClick, init };
+export { route, init };
